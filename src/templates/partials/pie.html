@@ -7,9 +7,11 @@
 <!--<center style='font-family:benton-sans'>Which graduate degrees draw students from this college?</br></br></center>-->
 <center style='font-family:benton-sans'>What is your current gender identity?</br></br></center>
 
-<button class="fill" onclick=update1(data11)>2016</button>
-<button class="fill" onclick=update1(data22)>2018</button>
-<button class="fill" onclick=update1(data33)>2020</button>
+<button class="fill" onclick=update1(data11)>2011</button>
+<button class="fill" onclick=update1(data22)>2012</button>
+<button class="fill" onclick=update1(data33)>2016</button>
+<button class="fill" onclick=update1(data44)>2018</button>
+<button class="fill" onclick=update1(data55)>2020</button>
 
 <!-- Create a div where the graph will take place -->
 <div id="pie_fa"></div>
@@ -30,9 +32,11 @@ var fa_svg = d3.select("#pie_fa")
   .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
-var data11 = {"values": {"Woman": 58.7, "Man": 39.3, "Transgender": 0.3, "Genderqueer":1.1, "Other":0.6}, "name": "2016"};
-var data22 = {"values": {"Woman": 57.1, "Man": 40.8, "Transgender": 0.3, "Genderqueer":1.3, "Other":0.5}, "name": "2018"};
-var data33 = {"values": {"Woman": 59.2, "Man": 38.4, "Transgender": 0.3, "Genderqueer":1.6, "Other":0.4}, "name": "2020"};
+var data11 = {"values": {"Woman": 58.6, "Man": 39.3, "Transgender": 0.1, "Genderqueer":0.3, "Other":1.7}, "name": "2011"};
+var data22 = {"values": {"Woman": 58.6, "Man": 39.8, "Transgender": 0, "Genderqueer":0, "Other":1.6}, "name": "2012"};
+var data33 = {"values": {"Woman": 58.7, "Man": 39.3, "Transgender": 0.3, "Genderqueer":1.1, "Other":0.6}, "name": "2016"};
+var data44 = {"values": {"Woman": 57.1, "Man": 40.8, "Transgender": 0.3, "Genderqueer":1.3, "Other":0.5}, "name": "2018"};
+var data55 = {"values": {"Woman": 59.2, "Man": 38.4, "Transgender": 0.3, "Genderqueer":1.6, "Other":0.4}, "name": "2020"};
 
 var div1 = d3.select("#pie_fa").append("div")
     .attr("class", "tooltip")
@@ -42,7 +46,7 @@ var div1 = d3.select("#pie_fa").append("div")
 // set the color_pie scale
 var color_pie = d3.scaleOrdinal()
   .domain(["a", "b", "c", "d", "e"])
-  .range(["#E87876", "#AACD80", "#70AADA", "#A07FAC", "#fcba64"]);
+  .range(["#90659d", "#4b7ca5", "#95c45c", "#ffdb60", "#f9975a"]);
 
 // A function that create / update the plot for a given variable:
 function update1(data) {
@@ -113,7 +117,7 @@ fa_svg.append("text")
 update1(data11)
 
 fa_svg.append("text")
-    .attr("x", 188)
+    .attr("x", 160)
     .attr("y", 175)
     .style("font-size", "12px")
     .style("font-family", "benton-sans")

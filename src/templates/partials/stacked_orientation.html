@@ -10,7 +10,7 @@
     var formatPercent = d3.format(".0%");
   
   width_bar = 850 - margin_line.left - margin_line.right,
-  height_bar = width_bar * 0.8;
+  height_bar = width_bar * 0.67;
   var div = d3.select("#stacked_bar").append("div")
       .attr("class", "tooltip")
       .style("opacity", 0);
@@ -26,7 +26,7 @@
   title.append("text")
         	.attr("class", "title")
         	.attr("text-anchor", "middle")
-        	.text("Breakdown of sexual orientation")
+        	.text("Sexual orientation of UC Berkeley students")
   
   // set x scale
   var x_bar = d3.scaleBand()
@@ -40,7 +40,7 @@
   
   // set the colors
   var z = d3.scaleOrdinal()
-         .range([ "#d18975", "#8F679C", "#338A6C", "#479BD1", "#f4803f"])
+         .range(["#95c45c", "#ffdb60", "#f9975a", "#e5565c"])
   
   var data = [
     { Enrollment: "2008", Bisexual: "320", "Gay/Lesbian": "242",  Heterosexual: "9929" , Other: "413", Total:"10904"},
@@ -48,8 +48,8 @@
     { Enrollment: "2010", Bisexual: "315", "Gay/Lesbian": "286",  Heterosexual: "9598" , Other: "416", Total:"10615"},
     { Enrollment: "2011", Bisexual: "214", "Gay/Lesbian": "179",  Heterosexual: "5955" , Other: "240", Total:"6588"},
     { Enrollment: "2012", Bisexual: "297", "Gay/Lesbian": "227",  Heterosexual: "7094" , Other: "204", Total:"7822"},
-    { Enrollment: "2014", Bisexual: "358", "Gay/Lesbian": "257",  Heterosexual: "6839" , Other: "134", Total:"125"},
-    { Enrollment: "2018", Bisexual: "688", "Gay/Lesbian": "404",  Heterosexual: "8126" , Other: "698", Total:"698"},
+    { Enrollment: "2014", Bisexual: "358", "Gay/Lesbian": "257",  Heterosexual: "6839" , Other: "134", Total:"7832"},
+    { Enrollment: "2018", Bisexual: "688", "Gay/Lesbian": "404",  Heterosexual: "8126" , Other: "698", Total:"9916"},
     { Enrollment: "2020", Bisexual: "1099", "Gay/Lesbian": "454",  Heterosexual: "9160" , Other: "847", Total:"11560"},
   ];
   
@@ -133,6 +133,14 @@
         .attr("fill", "#000")
         .attr("text-anchor", "start");
   
+svg.append("text")
+    .attr("x", 160)
+    .attr("y", 175)
+    .style("font-size", "12px")
+    .style("font-family", "benton-sans")
+    .style("font-style", "italic")
+    .text("Source: UCUES Survey");
+
     var legend = svg.append("g")
         .style("font-family", "benton-sans")
         .style("font-size", fsize)
