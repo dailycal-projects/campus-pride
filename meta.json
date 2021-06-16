@@ -1,0 +1,35 @@
+{
+  "id": "41180754178",
+  "publishPath": "2021/timeline/",
+  "stagingUrl": "http://stage-projects.dailycal.org/2021/pride/index.html",
+  "url": "http://projects.dailycal.org/2021/pride/",
+  "timestamp": "2020-10-25T08:13-0400",
+  "dateline": "10/25/20 08:13 PM EDT",
+  "header": {
+    "headline": "Campus pride",
+    "subhed": "Campus pride",
+    "byline": "Alex Zhao",
+    "byline_link": "https://www.dailycal.org/author/alexzhao"
+  },
+  "share": {
+    "fbook": {
+      "card_title": "Campus pride",
+      "card_description": "Campus pride",
+      "author": "dailycal"
+    },
+    "twitter": {
+      "card_title": "Campus pride",
+      "card_description": "Campus pride",
+      "share_tweet": "A timeline of The Daily Californian",
+      "author": "@dailycal"
+    },
+    "image": {
+      "url": "http://projects.dailycal.org/2021/timeline/images/cover.jpg",
+      "alt": "<Text>",
+      "type": "image/jpeg",
+      "width": "600",
+      "height": "400"
+    },
+    "keywords": "Daily Cal, news"
+  }
+}

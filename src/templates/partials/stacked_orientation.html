@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<div id="stacked_bar"></div>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+// create the svg
+  function stacked_orientation() {
+    let pageWidth = $(window).width();
+
+    var margin_line = {top: 80, right: 120, bottom: 40, left: 90};
+    var formatPercent = d3.format(".0%");
+  
+  width_bar = 850 - margin_line.left - margin_line.right,
+  height_bar = width_bar * 0.8;
+  var div = d3.select("#stacked_bar").append("div")
+      .attr("class", "tooltip")
+      .style("opacity", 0);
+  
+  var svg = d3.select("#stacked_bar").append("svg")
+                .attr("width", width_bar + margin_line.left + margin_line.right)
+                .attr("height", height_bar + margin_line.top + margin_line.bottom);
+  g = svg.append("g").attr("transform", "translate(" + margin_line.left + "," + margin_line.top + ")");
+  
+  var title = svg.append("g")
+        	.attr("transform", "translate(" + [width_bar / 2 + 100, 50] + ") ")
+  
+  title.append("text")
+        	.attr("class", "title")
+        	.attr("text-anchor", "middle")
+        	.text("Breakdown of sexual orientation")
+  
+  // set x scale
+  var x_bar = d3.scaleBand()
+      .rangeRound([0, width_bar])
+      .paddingInner(0.5)
+      .align(0.1);
+  
+  // set y scale
+  var y_bar = d3.scaleLinear()
+      .rangeRound([height_bar, 0]);
+  
+  // set the colors
+  var z = d3.scaleOrdinal()
+         .range([ "#d18975", "#8F679C", "#338A6C", "#479BD1", "#f4803f"])
+  
+  var data = [
+    { Enrollment: "2008", Bisexual: "320", "Gay/Lesbian": "242",  Heterosexual: "9929" , Other: "413", Total:"10904"},
+    { Enrollment: "2009", Bisexual: "243", "Gay/Lesbian": "199",  Heterosexual: "7507" , Other: "314", Total:"8263"},
+    { Enrollment: "2010", Bisexual: "315", "Gay/Lesbian": "286",  Heterosexual: "9598" , Other: "416", Total:"10615"},
+    { Enrollment: "2011", Bisexual: "214", "Gay/Lesbian": "179",  Heterosexual: "5955" , Other: "240", Total:"6588"},
+    { Enrollment: "2012", Bisexual: "297", "Gay/Lesbian": "227",  Heterosexual: "7094" , Other: "204", Total:"7822"},
+    { Enrollment: "2014", Bisexual: "358", "Gay/Lesbian": "257",  Heterosexual: "6839" , Other: "134", Total:"125"},
+    { Enrollment: "2018", Bisexual: "688", "Gay/Lesbian": "404",  Heterosexual: "8126" , Other: "698", Total:"698"},
+    { Enrollment: "2020", Bisexual: "1099", "Gay/Lesbian": "454",  Heterosexual: "9160" , Other: "847", Total:"11560"},
+  ];
+  
+    var keys = ["Bisexual", "Gay/Lesbian", "Other", "Heterosexual"]
+  
+    x_bar.domain(["2008", "2009", "2010", "2011", "2012", "2014", "2018", "2020"]);
+    y_bar.domain([0, 14000]).nice();
+    z.domain(keys);
+  
+    g.append("g")
+      .selectAll("g")
+      .data(d3.stack().keys(keys)(data))
+      .enter().append("g")
+        .attr("fill", function(d) { return z(d.key); })
+        .attr("opacity", 0.85)
+      .selectAll("rect")
+      .data(function(d) { return d; })
+      .enter().append("rect")
+        .attr("x", function(d) { return x_bar(d.data.Enrollment); })
+        .attr("y", function(d) { return y_bar(d[1]); })
+        .attr("height", function(d) { return y_bar(d[0]) - y_bar(d[1]); })
+        .attr("width", x_bar.bandwidth())
+      .on("mouseover", function(d) {
+          div.transition()
+            .duration(200)
+            .style("opacity", 1)
+            let p = d3.format(',')((d[1] - d[0]).toString()) + " (" + formatPercent((d[1] - d[0]) / d.data.Total) + ")"
+            div.html(p)
+                .style("width", "75px")
+                .style("height", "70px")
+                .style("text-align", "center")
+                .style("left", (d3.event.pageX + 10) + "px")
+                .style("top", (d3.event.pageY - 15) + "px")
+                .style("font-size", "18x")
+                .style("opacity", 0.7);
+            })
+      .on("mouseout", function(d) {
+          div.transition()
+            .duration(300)
+            .style("opacity", 0);
+        });
+  
+    //g.append("text")
+      //  .attr("x", (width / 2) - 100)
+      //  .attr("y", height + (margin_line.bottom/1.2))
+      //  .style("font-size", 16)
+      //  .style("font-family", "benton-sans")
+      //  .text("Undergraduate Enrollment")
+  
+    //g.append("text")
+      //  .attr("transform", "rotate(-90)")
+        //.attr("x", 0 - 200)
+        //.attr("y", 0 - 55)
+        //.style("font-size", 16)
+        //.style("font-family", "benton-sans")
+        //.text("Number of colleges")
+  
+    scale_bar = 1;
+    //if (width < 900) {scale_bar=1;}
+    if (pageWidth < 600) {scale_bar=1.7;}
+    fsize = 16 * scale_bar;
+    square = 16 * scale_bar;
+    spacing = 22 * scale_bar;
+  
+    g.append("g")
+        .attr("class", "axis")
+        .attr("transform", "translate(0," + height_bar + ")")
+        .style("font-family", "benton-sans")
+        .style("font-size", fsize)
+        .call(d3.axisBottom(x_bar).tickPadding(10).tickSize(3));
+  
+    g.append("g")
+        .attr("class", "axis")
+        .style("font-size", fsize)
+        .style("font-family", "benton-sans")
+        .call(d3.axisLeft(y_bar))//.ticks(5).tickSize(0).tickPadding(25))
+      .append("text")
+        .attr("x", 2)
+        .attr("y", y_bar(y_bar.ticks().pop()) + 0.5)
+        .attr("dy", "0.32em")
+        .attr("fill", "#000")
+        .attr("text-anchor", "start");
+  
+    var legend = svg.append("g")
+        .style("font-family", "benton-sans")
+        .style("font-size", fsize)
+        .attr("text-anchor", "end")
+      .selectAll("g")
+      .data(keys)
+      .enter().append("g")
+        .attr("transform", function(d, i) { return "translate(0," + (i * spacing) + ")"; });
+  
+    legend.append("rect")
+        .attr("x", width_bar)
+        .attr("y", 75)
+        .attr("width", square)
+    .attr("height", square)
+        .attr("fill", z);
+  
+    legend.append("text")
+        .attr("x", width_bar + 50)
+        .attr("text-anchor", "start")
+        .attr("y", 75 + (square/2))
+        .attr("dy", "0.32em")
+        .text(function(d) { return d; });
+  
+  
+    g.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("y", 0 - margin_line.left - 4)
+        .attr("x", 0 - (height_bar/2))
+        .attr("dy", "1em")
+        .style("text-anchor", "middle")
+        .style("font-size", "16px")
+        .text("Counts");
+  }
+
+stacked_orientation();
+</script>
